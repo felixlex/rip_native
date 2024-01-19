@@ -1,17 +1,17 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useState, useEffect } from 'react';
-import { resetShip, setShip } from '../store/ShipSlice';
+import { resetRecord, setRecord } from '../store/RecordSlice';
 import { axiosInstance } from '../API';
 import Loading from '../components/Loading';
 import ImageResizeMode from 'react-native/Libraries/Image/ImageResizeMode'
 
-export default function ShipScreen({ route }) {
+export default function RecordScreen({ route }) {
     const [ loading, setLoading ] = useState(true);
 
     const { id } = route.params;
     const dispatch = useDispatch();
-    const { ship } = useSelector((store) => store.ship);
+    const { record } = useSelector((store) => store.record);
     const [ parameters, setParameters ] = useState([]);
 
     const getParams = (source) => {
@@ -23,14 +23,14 @@ export default function ShipScreen({ route }) {
 
 
     useEffect(() => {
-        async function getship() {
+        async function getrecord() {
             await axiosInstance.get(`/records/${id}`).then((response) => {
-                dispatch(setShip(response?.data));
+                dispatch(setRecord(response?.data));
                 setParameters(getParams(response?.data));
             });
         }
 
-        getship().then(() => {
+        getrecord().then(() => {
             setLoading(false)
         }).catch((error) => {
             console.log(error)
@@ -38,16 +38,16 @@ export default function ShipScreen({ route }) {
         });
 
         return () => {
-            dispatch(resetShip());
+            dispatch(resetRecord());
         };
     }, [dispatch]);
 
     return (
         !loading ?
         <View style={styles.page}>
-            <Image style={styles.image} resizeMode={ImageResizeMode.contain} source={{uri : `data:image/jpeg;base64,${ship.photo_record}`}}/>
-            <Text style={styles.price}>{ship.rec_name}</Text>
-            <Text style={styles.desr}>{ship.description}</Text>
+            <Image style={styles.image} resizeMode={ImageResizeMode.contain} source={{uri : `data:image/jpeg;base64,${record.photo_record}`}}/>
+            <Text style={styles.price}>{record.rec_name}</Text>
+            <Text style={styles.desr}>{record.description}</Text>
             <Text style={styles.param_title}>Характеристики</Text>
             <View style={styles.container}>
                 {parameters.map((parameter, index) => (

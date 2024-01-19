@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import ShipListScreen from './screens/Ship_List';
-import ShipScreen from './screens/Ship'
+import RecordListScreen from './screens/Record_List';
+import RecordScreen from './screens/Record'
 import { store } from './store';
 import { Provider } from 'react-redux';
 
@@ -12,8 +12,8 @@ export default function App() {
         <Provider store={store}>
             <NavigationContainer>
                 <Stack.Navigator>
-                    <Stack.Screen name='Список рекордов' component={ShipListScreen} />
-                    <Stack.Screen name='Информация о рекорде' component={ShipScreen} />
+                    <Stack.Screen name='Список рекордов' component={RecordListScreen} />
+                    <Stack.Screen name='Информация о рекорде' component={RecordScreen} />
                 </Stack.Navigator>
             </NavigationContainer>
         </Provider>

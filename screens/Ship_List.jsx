@@ -2,22 +2,22 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useState, useEffect } from 'react';
 import { axiosInstance } from '../API';
-import { setShips } from '../store/ShipSlice';
-import Ship_Card from '../components/Ship_Card';
+import { setRecords } from '../store/RecordSlice';
+import Record_Card from '../components/Record_Card';
 import FIlter from '../components/Filter';
 import Loading from '../components/Loading';
 
-export default function ShipListScreen({ navigation }) {
+export default function RecordListScreen({ navigation }) {
     const [ loading, setLoading ] = useState(true);
     const dispatch = useDispatch();
-    const { ships } = useSelector((store) => store.ship);
+    const { records } = useSelector((store) => store.record);
     const [ searchValue, set_Search ] = useState("")
     const [ filterSendCount, set_Filter_Count ] = useState(0)
     useEffect(() => {
-        async function getAllships() {
-            await axiosInstance.get(`/records?name_filter=${searchValue}`).then((response) => dispatch(setShips(response?.data)));
+        async function getAllrecords() {
+            await axiosInstance.get(`/records?name_filter=${searchValue}`).then((response) => dispatch(setRecords(response?.data)));
         }
-        getAllships().then(() => {
+        getAllrecords().then(() => {
             setLoading(false)
         }).catch((error) => {
             console.log(error)
@@ -33,7 +33,7 @@ export default function ShipListScreen({ navigation }) {
                 setSearch={set_Search}
                 Send={set_Filter_Count}
                 </FIlter>
-                <View>{!!ships && ships.map((ship) => <Ship_Card key={ship.rec_id} {...ship} />)}</View>
+                <View>{!!records && records.map((record) => <Record_Card key={record.rec_id} {...record} />)}</View>
             </ScrollView>
             : <Loading />)
 }

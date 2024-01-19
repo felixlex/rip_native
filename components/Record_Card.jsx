@@ -3,7 +3,7 @@ import React from 'react';
 import ImageResizeMode from 'react-native/Libraries/Image/ImageResizeMode'
 import { useNavigation } from '@react-navigation/native';
 
-export default function Ship_Card({ navigation, ...props }) {
+export default function Record_Card({ navigation, ...props }) {
     const navigat = useNavigation();
     const handlePress = () => {
         navigat.navigate('Информация о рекорде', { id: props.record_id });
